@@ -53,24 +53,18 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
                 ///if either of the text input are empty!
                 else {
-                  if (title.text == "" || content.text == "") {
-                    if (title.text == "") {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Input title'),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'input body and title',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
                         ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Input body'),
-                        ),
-                      );
-                    }
-                  }
-                  if (title.text == "" && content.text == "") {
-                    errorDialog();
-                  }
+                      ),
+                      backgroundColor: Color.fromRGBO(246, 185, 15, 1),
+                    ),
+                  );
                 }
               },
               icon: const Icon(

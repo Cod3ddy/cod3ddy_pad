@@ -20,13 +20,24 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 70,
         child: FloatingActionButton.large(
           elevation: 5,
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const AddNoteScreen(),
               ),
             );
+
+            if (result != null) {
+              sampleNotes.add(
+                Note(
+                  id: sampleNotes.length,
+                  title: result[0],
+                  content: result[1],
+                  modifiedTime: DateTime.now(),
+                ),
+              );
+            }
           },
           backgroundColor: const Color.fromRGBO(246, 185, 15, 1),
           shape: const CircleBorder(),
