@@ -117,6 +117,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     );
   }
 
+//add note body components
   _addNoteBodyUi() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -166,7 +167,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             ),
             keyboardType: TextInputType.multiline,
           ),
-          //end testing
         ],
       ),
     );

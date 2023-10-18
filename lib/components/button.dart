@@ -20,11 +20,4 @@ class NoteHistoryButton extends StatelessWidget {
       style: buttonStyle,
     );
   }
-
-  // TextStyle enabledStyle() {
-  //   return TextStyle();
-  // }
-  // TextStyle disabledStyle() {
-  //   return TextStyle();
-  // }
 }
