@@ -1,3 +1,4 @@
+import 'package:cod3ddy_pad/models/months.dart';
 import 'package:cod3ddy_pad/models/notes.dart';
 import 'package:cod3ddy_pad/screens/addnote.dart';
 import 'package:flutter/material.dart';
@@ -29,12 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
             );
 
             if (result != null) {
+              final dateTime = DateTime.now();
+              //get month from the list
+              final month = months[dateTime.month - 1];
+              String date =
+                  "$month ${dateTime.day} ${dateTime.hour}:${dateTime.minute}";
               sampleNotes.add(
                 Note(
                   id: sampleNotes.length,
                   title: result[0],
                   content: result[1],
-                  modifiedTime: DateTime.now(),
+                  modifiedTime: date,
                 ),
               );
             }
@@ -288,30 +294,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         //testing wrap widget
       ],
-    );
-  }
-
-  GridView buildGridvew() {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemBuilder: (context, index) => const ListCard(),
-    );
-  }
-
-  _buildListView() {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        if (index % 2 == 0) {
-          return Card();
-        } else {
-          return Card();
-        }
-      },
     );
   }
 }

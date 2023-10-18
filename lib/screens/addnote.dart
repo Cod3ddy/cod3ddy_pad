@@ -44,7 +44,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             IconButton(
               onPressed: () {
                 final result = _validateInput(title, content);
-                print(result);
                 if (result) {
                   Navigator.of(context).pop(
                     [title.text, content.text],
@@ -97,9 +96,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             controller: title,
             cursorColor: const Color.fromRGBO(246, 185, 15, 1),
             cursorRadius: const Radius.circular(10.0),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 30.0,
               fontWeight: FontWeight.bold,
+              color: Colors.grey.shade800,
             ),
             decoration: const InputDecoration(
               hintText: 'Title',
@@ -115,9 +115,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             controller: content,
             cursorColor: const Color.fromRGBO(246, 185, 15, 1),
             cursorRadius: const Radius.circular(10.0),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20.0,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey.shade900,
             ),
             decoration: const InputDecoration(
               hintText: 'Start typing',
@@ -128,6 +129,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               ),
               border: InputBorder.none,
             ),
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
           ),
         ],
       ),
