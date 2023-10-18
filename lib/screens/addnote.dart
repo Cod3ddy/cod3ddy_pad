@@ -11,11 +11,12 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   late TextEditingController title, content;
-  final FocusNode _focusNode = FocusNode();
-  final UndoHistoryController _undoController = UndoHistoryController();
+  final FocusNode _titleFocusNode = FocusNode();
+  final FocusNode _contentFocusNode = FocusNode();
+  final UndoHistoryController _undoContentController = UndoHistoryController();
+  final UndoHistoryController _placeHolderController = UndoHistoryController();
 
   ButtonStyle? enabledStyle() => ButtonStyle(
-        // ignore: prefer_collection_literals
         iconColor: MaterialStateProperty.all(
           Colors.black,
         ),
@@ -42,42 +43,39 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
-            ),
             //listen to the focused text field if its possible to redo or undo
             ValueListenableBuilder(
-              valueListenable: _undoController,
+              valueListenable: _undoContentController,
               builder: (context, value, child) {
                 return Row(
                   children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                    ),
                     NoteHistoryButton(
                       icon: const Icon(Icons.undo),
                       buttonStyle:
                           value.canUndo ? enabledStyle() : disabledStyle(),
                       onPressed: () {
-                        _undoController.undo();
+                        _undoContentController.undo();
                       },
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.001,
                     ),
                     NoteHistoryButton(
                       icon: const Icon(Icons.redo),
                       buttonStyle:
                           value.canRedo ? enabledStyle() : disabledStyle(),
                       onPressed: () {
-                        _undoController.redo();
+                        _undoContentController.redo();
                       },
                     ),
                   ],
                 );
               },
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.001,
-            ),
-            Icon(
-              Icons.redo,
-              color: Colors.grey.shade400,
-            ),
+
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.001,
             ),
@@ -112,14 +110,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 color: Colors.black,
               ),
             ),
-            // GestureDetector(
-            //   onTap: () {},
-            //   child: const Icon(
-            //     Icons.check,
-            //     size: 30,
-            //     color: Colors.black,
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -132,38 +122,11 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         children: [
-          //testing
+          //title textfield
           NoteTextField(
             controller: title,
-            focusNode: _focusNode,
-            undoController: _undoController,
-            decoration: const InputDecoration(
-              hintText: 'Test',
-              hintStyle: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w700,
-                color: Color.fromRGBO(110, 110, 110, 1),
-              ),
-              border: InputBorder.none,
-            ),
-            maxLines: null,
-            textStyle: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w700,
-              color: Colors.grey.shade800,
-            ),
-            keyboardType: TextInputType.text,
-          ),
-          //end testing
-          TextField(
-            controller: title,
-            cursorColor: const Color.fromRGBO(246, 185, 15, 1),
-            cursorRadius: const Radius.circular(10.0),
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey.shade800,
-            ),
+            focusNode: _titleFocusNode,
+            undoController: _placeHolderController,
             decoration: const InputDecoration(
               hintText: 'Title',
               hintStyle: TextStyle(
@@ -173,16 +136,19 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               ),
               border: InputBorder.none,
             ),
-          ),
-          TextField(
-            controller: content,
-            cursorColor: const Color.fromRGBO(246, 185, 15, 1),
-            cursorRadius: const Radius.circular(10.0),
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade900,
+            maxLines: null,
+            textStyle: TextStyle(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade800,
             ),
+            keyboardType: TextInputType.text,
+          ),
+          //body text field
+          NoteTextField(
+            controller: content,
+            focusNode: _contentFocusNode,
+            undoController: _undoContentController,
             decoration: const InputDecoration(
               hintText: 'Start typing',
               hintStyle: TextStyle(
@@ -192,9 +158,15 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               ),
               border: InputBorder.none,
             ),
-            keyboardType: TextInputType.multiline,
             maxLines: null,
+            textStyle: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey.shade900,
+            ),
+            keyboardType: TextInputType.multiline,
           ),
+          //end testing
         ],
       ),
     );
