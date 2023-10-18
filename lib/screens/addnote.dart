@@ -14,9 +14,19 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final FocusNode _focusNode = FocusNode();
   final UndoHistoryController _undoController = UndoHistoryController();
 
-  get enabledStyle => null;
-
-  get disabledStyle => null;
+  ButtonStyle? enabledStyle() => ButtonStyle(
+        // ignore: prefer_collection_literals
+        iconColor: MaterialStateProperty.all(
+          Colors.black,
+        ),
+      );
+  ButtonStyle? disabledStyle() {
+    return ButtonStyle(
+      iconColor: MaterialStateProperty.all(
+        Colors.grey,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -35,12 +45,31 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
             ),
-            NoteHistoryButton(
-              icon: const Icon(Icons.undo),
-              undoController: _undoController,
-              enabledStyle: enabledStyle,
-              disabledStyle: disabledStyle,
-              onPressed: _undoController.undo(),
+            //listen to the focused text field if its possible to redo or undo
+            ValueListenableBuilder(
+              valueListenable: _undoController,
+              builder: (context, value, child) {
+                return Row(
+                  children: [
+                    NoteHistoryButton(
+                      icon: const Icon(Icons.undo),
+                      buttonStyle:
+                          value.canUndo ? enabledStyle() : disabledStyle(),
+                      onPressed: () {
+                        _undoController.undo();
+                      },
+                    ),
+                    NoteHistoryButton(
+                      icon: const Icon(Icons.redo),
+                      buttonStyle:
+                          value.canRedo ? enabledStyle() : disabledStyle(),
+                      onPressed: () {
+                        _undoController.redo();
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.001,
