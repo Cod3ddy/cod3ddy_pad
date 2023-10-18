@@ -1,3 +1,5 @@
+import 'package:cod3ddy_pad/components/button.dart';
+import 'package:cod3ddy_pad/components/textfield.dart';
 import 'package:flutter/material.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -9,6 +11,12 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   late TextEditingController title, content;
+  final FocusNode _focusNode = FocusNode();
+  final UndoHistoryController _undoController = UndoHistoryController();
+
+  get enabledStyle => null;
+
+  get disabledStyle => null;
 
   @override
   void initState() {
@@ -27,9 +35,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
             ),
-            Icon(
-              Icons.undo,
-              color: Colors.grey.shade400,
+            NoteHistoryButton(
+              icon: const Icon(Icons.undo),
+              undoController: _undoController,
+              enabledStyle: enabledStyle,
+              disabledStyle: disabledStyle,
+              onPressed: _undoController.undo(),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.001,
@@ -92,6 +103,29 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         children: [
+          //testing
+          NoteTextField(
+            controller: title,
+            focusNode: _focusNode,
+            undoController: _undoController,
+            decoration: const InputDecoration(
+              hintText: 'Test',
+              hintStyle: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w700,
+                color: Color.fromRGBO(110, 110, 110, 1),
+              ),
+              border: InputBorder.none,
+            ),
+            maxLines: null,
+            textStyle: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w700,
+              color: Colors.grey.shade800,
+            ),
+            keyboardType: TextInputType.text,
+          ),
+          //end testing
           TextField(
             controller: title,
             cursorColor: const Color.fromRGBO(246, 185, 15, 1),
