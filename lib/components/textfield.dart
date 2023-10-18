@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class NoteTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -20,10 +19,6 @@ class NoteTextField extends StatelessWidget {
     required this.keyboardType,
     super.key,
   });
-
-  // TextStyle? get enabledStyle => Theme.of(context).textTheme.bodyMedium;
-  // TextStyle? get disabledStyle =>
-  //     Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey);
 
   @override
   Widget build(BuildContext context) {
