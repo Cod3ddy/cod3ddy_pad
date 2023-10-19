@@ -307,51 +307,60 @@ class ListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        padding: const EdgeInsets.all(20.0),
-        margin: const EdgeInsets.only(left: 5, bottom: 4),
-        width: MediaQuery.of(context).size.width * 0.45,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade100,
-              offset: const Offset(0, 0),
-              blurRadius: 4.3,
-              spreadRadius: 2.3,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddNoteScreen(),
             ),
-          ],
-        ),
-        child: RichText(
-          textDirection: TextDirection.ltr,
-          maxLines: 8,
-          overflow: TextOverflow.fade,
-          text: const TextSpan(
-            text: "Hello World\n\n",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-            children: [
-              TextSpan(
-                text: 'Shadowyhands\nrep\n\n',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color.fromRGBO(110, 110, 110, 1),
-                  fontWeight: FontWeight.w300,
-                  height: 1.2,
-                ),
-              ),
-              TextSpan(
-                text: 'Oct 9 11:27',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Color.fromRGBO(110, 110, 110, 1),
-                ),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.only(left: 5, bottom: 4),
+          width: MediaQuery.of(context).size.width * 0.45,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade700,
+                offset: const Offset(0, 6),
+                blurRadius: 4.3,
+                spreadRadius: 5.3,
               ),
             ],
+          ),
+          child: RichText(
+            textDirection: TextDirection.ltr,
+            maxLines: 8,
+            overflow: TextOverflow.fade,
+            text: const TextSpan(
+              text: "Hello World\n\n",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+              children: [
+                TextSpan(
+                  text: 'Shadowyhands\nrep\n\n',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromRGBO(110, 110, 110, 1),
+                    fontWeight: FontWeight.w300,
+                    height: 1.2,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Oct 9 11:27',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color.fromRGBO(110, 110, 110, 1),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
